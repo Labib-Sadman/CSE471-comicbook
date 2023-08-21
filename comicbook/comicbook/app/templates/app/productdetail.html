@@ -1,0 +1,152 @@
+<!-- productdetail.html -->
+
+
+
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Product Detail{% endblock title %}
+{% block main-content %}
+
+
+<style>
+  .product-image-container {
+    position: relative; /* Add position relative to the container */
+    max-height: 800px;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .swiper-container {
+    /* Remove width and height from swiper-container to make it responsive */
+    position: relative;
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    position: absolute;
+    top: 50%; /* Position the buttons in the middle vertically */
+    transform: translateY(-50%); /* Center them vertically */
+    width: 30px;
+    height: 30px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .swiper-button-prev {
+    left: 40px; /* Position the previous button on the left side */
+  }
+
+  .swiper-button-next {
+    right: 40px; /* Position the next button on the right side */
+  }
+
+  .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .discounted-price {
+    font-size: 36px;
+    font-weight: bold;
+    color: #27ae60;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .discounted-price:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+
+</style>
+
+<div class="container my-5">
+  <div class="row">
+    <div class="col-sm-6 text-center align-self-center product-image-container">
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <img src="{{ product.product_image.url }}" alt="" class="img-fluid img-thumbnail product-image">
+          </div>
+          {% for image in productlist %}
+          <div class="swiper-slide">
+            <img src="{{ image.image.url }}" alt="" class="img-fluid img-thumbnail product-image">
+          </div>
+          {% endfor %}
+        </div>
+        <!-- Add pagination and navigation arrows for the Swiper slider -->
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev">&#10094;</div>
+        <div class="swiper-button-next">&#10095;</div>
+      </div>
+    </div>
+    <div class="col-sm-5 offset-sm-1">
+      <!-- The rest of your product detail content -->
+      <h2 class="product-title">{{ product.title }}</h2>
+      <hr>
+      <p>{{ product.description }}</p>
+      <br>
+      <h4 class="discounted-price">Taka. {{ product.discounted_price }} <small class="fw-light text-decoration-line-through">{{ product.selling_price }}</small></h4>
+      <br>
+      {% if request.user.is_authenticated %}
+      {% if item_already_in_cart %}
+        <a href="{% url 'showcart' %}" class='btn btn-warning shadow px-5 py-2 ms-4'>Go to Cart</a>
+      {% else %}
+        <form action="/add-to-cart" class="d-inline">
+        <input type="hidden" name="prod_id" value="{{ product.id }}" id="prod_id">
+        <button type="submit" class="btn btn-primary shadow px-5 py-2">Add to Cart</button>
+        </form>    
+      {% endif %}
+      {% endif %}
+      {% if not request.user.is_authenticated %}
+      <form action="/add-to-cart" class="d-inline">
+        <input type="hidden" name="prod_id" value="{{ product.id }}" id="prod_id">
+        <button type="submit" class="btn btn-primary shadow px-5 py-2">Add to Cart</button>
+        </form>  
+      {% endif %}
+
+
+      <a href="{% url 'checkout' %}" class="btn btn-danger shadow px-5 py-2 ms-4">Buy Now</a>
+      <h5 class="mt-5">Available Offers</h5>
+      <ul>
+        <li>Buy 2, Get 1 Free: Purchase any two comic books from our extensive collection and get one comic book of your choice for free.</li>
+        <li>Limited Edition Variant: Pre-order any comic book and receive a limited edition variant cover for free.</li>
+        <li>Weekly Flash Sale: Up to 50% Off on select comic book series every week.</li>
+        <li>Comic Club Membership: Enroll in our Comic Club Membership for Tk. 500/year and enjoy extra perks!</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var swiper = new Swiper(".swiper-container", {
+      loop: true, // Enable looping for the slider
+      pagination: {
+        el: ".swiper-pagination", // Pagination element
+        clickable: true, // Enable clickable pagination bullets
+      },
+      navigation: {
+        nextEl: ".swiper-button-next", // Next arrow
+        prevEl: ".swiper-button-prev", // Previous arrow
+      },
+    });
+  });
+</script>
+
+{% endblock main-content %}

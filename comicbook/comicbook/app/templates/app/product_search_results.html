@@ -1,0 +1,96 @@
+<!-- product_search_results.html -->
+
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Search Results{% endblock title %}
+{% block main-content %}
+<style>
+  .search-results-container {
+    margin-top: 50px;
+  }
+
+  .search-results-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #007bff;
+  }
+
+  .search-results-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .search-results-list li {
+    margin-bottom: 15px;
+  }
+
+  .search-results-list li a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  .search-results-list li a:hover {
+    text-decoration: underline;
+  }
+
+  .no-results {
+    font-size: 18px;
+    color: #dc3545;
+  }
+
+  .product-item {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+
+  .product-image {
+    max-width: 200px; /* Set the maximum width you want */
+    max-height: 200px; /* Set the maximum height you want */
+    margin-right: 20px;
+    object-fit: contain; /* Make the image fit within the specified size without cropping */
+  }
+
+  .product-details {
+    flex: 1;
+  }
+
+  .product-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .product-price {
+    font-size: 16px;
+    color: #007bff;
+  }
+</style>
+
+<div class="container my-5 search-results-container">
+    <h2 class="search-results-title">Search Results</h2>
+    {% if products %}
+        <ul class="search-results-list">
+            {% for product in products %}
+                <li class="product-item">
+                    <div class="col-sm-3 text-center align-self-center product-image-container">
+                        <img src="{{product.product_image.url}}" alt="" class="img-fluid img-thumbnail product-image">
+                    </div>
+                    <div class="product-details">
+                        <a href="{% url 'product-detail' product.id %}" class="product-title">{{ product.title }}</a>
+                        <p class="product-price">Taka. {{ product.discounted_price }}</p>
+                        <form action="/add-to-cart" class="d-inline">
+                            <input type="hidden" name="prod_id" value={{product.id}} id='prod_id'>
+                            <button type="submit" class='btn btn-primary shadow px-5 py-2'>Add to Cart</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="no-results">No products found.</p>
+    {% endif %}
+</div>
+{% endblock main-content %}

@@ -1,0 +1,213 @@
+
+
+
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block main-content %}
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@100&family=Exo:ital,wght@1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Exo:ital,wght@1,900&display=swap");
+.about {
+  padding: 2rem 0rem;
+}
+.upper,
+.lower {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-bottom: 1rem;
+}
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#logo {
+  width: 70%;
+}
+.image {
+  background-image: url(https://cdn.dribbble.com/users/696579/screenshots/5415942/drib_test_2.gif);
+  background-size: cover;
+  width: 36rem;
+  height: 28rem;
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
+}
+.camp {
+  position: relative;
+  top: 2.6rem;
+  left: 7.3rem;
+}
+#tent {
+  width: 30%;
+}
+#fire {
+  width: 15%;
+  position: relative;
+  top: 1rem;
+  right: 1rem;
+}
+.info {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 0rem 2rem;
+  border-radius: 10px;
+  /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+}
+/* .info:hover{
+  transform: scale(1.1);
+} */
+.info h1 {
+  font-family: "Exo", sans-serif;
+  font-size: 3rem;
+  font-weight: black 900;
+  margin-bottom: 0rem;
+}
+.head1 {
+  text-decoration: white;
+}
+.info p {
+  font-family: "Exo 2", sans-serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.slider {
+  display: flex;
+  align-items: center;
+  padding-top: 3.5rem;
+}
+.slider img {
+  width: 36rem;
+  height: 28rem;
+  border-radius: 50%;
+}
+/* ------------------------------------ */
+@media (max-width: 768px) {
+  .upper {
+    flex-direction: column;
+    margin-bottom: 0rem;
+  }
+  #logo {
+    width: 50%;
+  }
+  .image {
+    width: 18rem;
+    height: 14rem;
+  }
+  .camp {
+    top: 1.2rem;
+    left: 3rem;
+  }
+  .info {
+    width: 85%;
+    padding: 0rem 1.7rem;
+  }
+  .info h1 {
+    font-size: 2rem;
+  }
+  .info p {
+    font-size: 1rem;
+  }
+  .slider {
+    justify-content: center;
+    padding-top: 2rem;
+  }
+  .slider img {
+    width: 18rem;
+    height: 14rem;
+  }
+  .lower {
+    flex-direction: column-reverse;
+  }
+}
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="about.css" />
+  <title>About Us</title>
+</head>
+
+<body>
+  <div class="about">
+    <!-- ------------------------------------ -->
+    <div class="upper">
+      <div class="logo">
+        <!--      here i put the logo i made but the links were not working and the logo didn't show so removed it :(      -->
+        <div class="image">
+          <div class="camp">
+            <img src="https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/78235/tent-clipart-md.png" alt="Image" id="tent" />
+            <img src="https://thumbs.gfycat.com/LinedGoldenKentrosaurus-max-1mb.gif" alt="Image" id="fire" />
+          </div>
+        </div>
+      </div>
+      <div class="info">
+        <h1>ABOUT COMICBOOK</h1>
+        <p>
+            At ComicBook, storytelling is more than just a craft; it's a passion. For over a decade, we've woven tales where vibrant worlds come to life and heroes take flight, capturing the hearts and minds of readers worldwide. As pioneers in the realm of comic culture, we pride ourselves on connecting fans to narratives filled with valor, romance, and boundless imagination. Every flip of our pages promises an epic journey, a blend of art and narrative that both captivates and challenges. Dive deep into our universe and let your imagination soar.
+        </p>
+      </div>
+    </div>
+    <!-- ------------------------------------ -->
+    <div class="lower">
+      <div class="info" id="lower-info">
+        <h1>ABOUT OUR TEAM</h1>
+        <p>
+            At ComicBook, our dedicated team is the heart behind every captivating tale. From imaginative writers to talented illustrators and meticulous editors, we're united by a shared passion for storytelling. Together, we're committed to delivering unforgettable narratives and ensuring they reach readers worldwide.
+        </p>
+      </div>
+      <div class="slider" id="lower-img">
+        <img src="https://i.pinimg.com/736x/6d/7d/b3/6d7db3a1037c8ac5b41b0ebfec293ca4.jpg" alt="Image" id="slider" />
+      </div>
+    </div>
+    <!-- ------------------------------------ -->
+  </div>
+</body>
+<script src="about.js"></script>
+
+</html>
+
+<script>
+    let images = [
+  "https://i.pinimg.com/736x/6d/7d/b3/6d7db3a1037c8ac5b41b0ebfec293ca4.jpg",
+  "https://i.pinimg.com/550x/52/10/e4/5210e4858e732f40ef13e5010d52b1f4.jpg",
+  "https://i.pinimg.com/736x/44/08/9e/44089e56f4c65b00fffb914361f10cf4.jpg"
+];
+let slide = document.getElementById("slider");
+const slider = () => {
+  let i = 0;
+  setInterval(function () {
+    i = i < images.length - 1 ? ++i : 0;
+    slide.src = images[i];
+  }, 2000);
+};
+slide.addEventListener("load", slider());
+
+</script>
+{% endblock main-content %}

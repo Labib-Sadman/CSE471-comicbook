@@ -1,0 +1,72 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Buy Now{% endblock title %}
+{% block main-content %}
+<div class="container">
+ <div class="row mt-5">
+  <div class="col-sm-6">
+    <h4>Order Summary</h4>
+    <hr>
+    {% for item in cart_items %}
+      <div class="card mb-2">
+        <div class="card-body">
+          <h5>Product: {{item.product.title}}</h5>
+          <p>Quantity: {{item.quantity}}</p>
+          <p class="fw-bold">Price:{{item.total_cost}}</p>
+        </div>
+      </div>
+      {% endfor %}
+      <p>Total cost + delivery charge (70 taka.): {{totalamount}}</p>
+    <small>
+      By making a purchase, you agree to our terms: accurate product info, payment in taka, varied shipping times, 7 days return policy, digital content for personal use, and limited liability. Disputes under Bangladeshi laws, with possible changes in terms. Questions? Contact support@website.com.</small>
+  </div>
+  <div class="col-sm-4 offset-sm-1">
+    <h4>Select Shipping Address</h4>
+    <hr>
+    <form action="/paymentdone" id="myform">
+      {% for ad in add %}
+      <div class="card">
+        <div class="card-body">
+        <h5>{{ad.name}}</h5>
+        <p>{{ad.locality}}, {{ad.city}}, {{ad.state}}-{{ad.zipcode}}</p>
+        </div>
+      </div>
+        <div class="form-check mt-2 mb-5">
+          <input class="form-check-input" type="radio" name='custid' id='custadd{{foorloop.counter}}' value="{{ad.id}}">
+          <label class="form-check-label fw-bold" for="">
+            Address: {{forloop.counter}} </label>
+        </div>
+        {% endfor %}
+        <div class="text-end">
+           {% comment %} <button type="submit" class="btn btn-warning mt-3 px-5 fw-bold">Continue</button> {% endcomment %}
+            <!-- Set up a container element for the button -->
+            <div id="paypal-button-container"></div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div> 
+{% endblock main-content %}
+{% block payment-gateway %}
+<script src="https://www.paypal.com/sdk/js?client-id=AVFIVE5LNPh6LQY9wR0czEmMNKL4q-LUVW_IReODjKqrQJo_ZNw5GIe90OQ6i79R_ddERZZknlKfAY7s&currency=USD"></script>
+<script>
+  paypal.Buttons({
+      createOrder: function(data, actions) {
+          return actions.order.create({
+              purchase_units: [{
+                  amount: {
+                      value: '{{totalamount}}' // Replace with the desired amount
+                  }
+              }]
+          });
+      },
+      onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+              alert('Transaction completed by ' + details.payer.name.given_name);
+              document.getElementById("myform").submit();
+              // You can perform additional actions here, such as storing the transaction details in your database.
+          });
+      }
+  }).render('#paypal-button-container');
+</script>
+{% endblock payment-gateway %}
